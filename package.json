@@ -5,6 +5,7 @@
   "main": "./out/main/index.js",
   "author": "flourish",
   "homepage": "https://github.com/BrickedSoft/attendance",
+  "license": "MIT",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
