@@ -1,3 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-primary text-light-black-55;
+}
+
+.header {
+  app-region: drag;
+  -webkit-app-region: drag;
+}
+
+/* ------------------------------- Scroll Bar ------------------------------- */
+
+::-webkit-scrollbar {
+  width: 0.75rem;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 9px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(45deg, #adb5bd 0%, #ced4da 100%);
+  border-radius: 9px;
+  transition: all 1s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-image: linear-gradient(45deg, rgba(122, 104, 215, 0.5), rgba(122, 104, 215, 0.25));
+}
