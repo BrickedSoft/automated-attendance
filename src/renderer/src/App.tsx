@@ -6,6 +6,7 @@ const App = (): JSX.Element => {
   return (
     <div className="w-full">
       <Header />
+      <Frame />
     </div>
   )
 }

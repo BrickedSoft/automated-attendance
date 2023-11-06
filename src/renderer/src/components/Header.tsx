@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 
-import { controlItems, navItems } from '@renderer/assets/data/header'
+import { controlItems } from '@renderer/assets/data/header'
 import Logo from '../assets/img/logo.png'
 
 type NavItemProps = {
@@ -10,7 +10,7 @@ type NavItemProps = {
 
 type ControlItemProps = {
   icon: ReactNode
-  href: string
+  onClick: () => void
 }
 
 const NavItem: FC<NavItemProps> = ({ title, href }) => {
@@ -21,29 +21,39 @@ const NavItem: FC<NavItemProps> = ({ title, href }) => {
   )
 }
 
-const ControlItem: FC<ControlItemProps> = ({ icon }) => {
-  return <li className="text-light-black-33 uppercase font-medium text-sm">{icon}</li>
+const ControlItem: FC<ControlItemProps> = ({ icon, onClick }) => {
+  return (
+    <li className="text-light-black-33 uppercase font-medium text-sm" onClick={onClick}>
+      {icon}
+    </li>
+  )
 }
+
+// TODO: border-b-light-gray-f9 border-b-[1.8px]
 
 const Header = () => {
   return (
-    <div className="header w-full h-header">
-      <div className="h-full grid grid-cols-3 items-center justify-center px-5">
-        <img src={Logo} className="h-8 w-auto" />
+    <div className="w-full h-header py-0.5 grid grid-cols-[auto_1fr_auto_1fr_auto] items-center justify-center px-5">
+      <img src={Logo} className="h-6 w-auto" />
 
-        <ul className="list-none flex justify-center items-center gap-6">
+      <div className="draggable w-full h-full"></div>
+
+      {/* ----------------------------------- Mid ---------------------------------- */}
+
+      <div className="draggable w-full h-full"></div>
+      {/* <ul className="list-none flex justify-center items-center gap-6">
           {navItems.map(({ title, href }, index) => (
             <NavItem title={title} href={href} key={index} />
           ))}
-        </ul>
+        </ul> */}
 
-        <ul className="list-none flex justify-end items-center gap-6">
-          {controlItems.map(({ icon, href }, index) => (
-            <ControlItem icon={icon} href={href} key={index} />
-          ))}
-        </ul>
-      </div>
-      <hr className="border-light-gray-f9 border-[1.2px]" />
+      <div className="draggable w-full h-full"></div>
+
+      <ul className="list-none flex justify-end items-center gap-6">
+        {controlItems.map(({ icon, onClick }, index) => (
+          <ControlItem icon={icon} onClick={onClick} key={index} />
+        ))}
+      </ul>
     </div>
   )
 }

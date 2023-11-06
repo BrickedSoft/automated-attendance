@@ -1,12 +1,18 @@
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
-// Custom APIs for renderer
-const api = {}
+const api = {
+  /* ----------------------------- Window Controls ---------------------------- */
 
-// Use `contextBridge` APIs to expose Electron APIs to
-// renderer only if context isolation is enabled, otherwise
-// just add to the DOM global.
+  closeWindow: () => ipcRenderer.send('CLOSE_WINDOW'),
+  minimizeWindow: () => ipcRenderer.send('MINIMIZE_WINDOW'),
+  toggleWindow: () => ipcRenderer.send('TOGGLE_WINDOW'),
+
+  /* ------------------------------ Window Events ----------------------------- */
+
+  isMaximized: (e) => ipcRenderer.sendSync('IS_MAXIMIZED', e)
+}
+
 if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI)
@@ -20,3 +26,5 @@ if (process.contextIsolated) {
   // @ts-ignore (define in dts)
   window.api = api
 }
+
+export type ApiType = typeof api

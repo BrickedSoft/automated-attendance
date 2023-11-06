@@ -18,7 +18,7 @@ export default {
         primary: ['Rubik']
       },
       height: {
-        header: '2.5rem'
+        header: '2rem'
       }
     }
   },

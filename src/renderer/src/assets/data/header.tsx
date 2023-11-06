@@ -13,15 +13,15 @@ export const navItems = [
 
 export const controlItems = [
   {
-    icon: <TbMinus size={18} strokeWidth={3} />,
-    href: '/remove'
+    icon: <TbMinus size={20} strokeWidth={2} />,
+    onClick: () => window.api.minimizeWindow()
   },
   {
-    icon: <TbMaximize size={16} strokeWidth={3} />,
-    href: '/remove'
+    icon: <TbMaximize size={16} strokeWidth={2} />,
+    onClick: () => window.api.toggleWindow()
   },
   {
-    icon: <TbX size={18} strokeWidth={3} />,
-    href: '/close'
+    icon: <TbX size={20} strokeWidth={2} />,
+    onClick: () => window.api.closeWindow()
   }
 ]

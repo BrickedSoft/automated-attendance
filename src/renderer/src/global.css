@@ -12,9 +12,10 @@ body {
   @apply font-primary text-light-black-55;
 }
 
-.header {
+.draggable {
   app-region: drag;
   -webkit-app-region: drag;
+  -webkit-user-select: none;
 }
 
 /* ------------------------------- Scroll Bar ------------------------------- */

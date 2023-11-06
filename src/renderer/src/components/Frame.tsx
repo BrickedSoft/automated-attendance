@@ -1,10 +1,8 @@
 'use client'
 
-import * as canvas from 'canvas'
-import * as faceApi from 'face-api.js'
 import { useEffect, useRef } from 'react'
-
-import File from './File'
+import * as faceApi from 'face-api.js'
+import { Resizable } from 're-resizable'
 
 const startWebCam = (ref: HTMLVideoElement) => {
   navigator.mediaDevices
@@ -102,17 +100,17 @@ const Frame = () => {
   })
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <video
-        ref={frameRef}
-        id="video"
-        width="600"
-        height="450"
-        autoPlay
-        className="border-2"
-      ></video>
-
-      <File />
+    <main className="w-full h-[calc(100vh - container)]">
+      <Resizable className="border-2 border-red-500">
+        <video
+          ref={frameRef}
+          id="video"
+          width={'100%'}
+          height={'100%'}
+          autoPlay
+          className="h-full w-full border-green-500"
+        ></video>
+      </Resizable>
     </main>
   )
 }
