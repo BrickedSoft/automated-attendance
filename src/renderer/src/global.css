@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  @apply font-primary text-light-black-55;
+  @apply font-primary text-light-black-55 overflow-hidden;
 }
 
 .draggable {

@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
 import * as faceApi from 'face-api.js'
 import { Resizable } from 're-resizable'
+import { SyntheticEvent, useEffect, useRef } from 'react'
 
 const startWebCam = (ref: HTMLVideoElement) => {
   navigator.mediaDevices
@@ -44,63 +44,65 @@ const initWebCam = async (ref: HTMLVideoElement) => {
 }
 
 const Frame = () => {
+  const frameContainerRef = useRef<HTMLDivElement>(null)
   const frameRef = useRef<HTMLVideoElement>(null)
+  const present = new Set<string>([])
 
   useEffect(() => {
     if (frameRef.current) initWebCam(frameRef.current)
   }, [frameRef])
 
-  useEffect(() => {
-    frameRef?.current?.addEventListener('play', async () => {
-      console.log('play')
-      const present = new Set<string>([])
-      if (frameRef.current) {
-        const labeledFaceDescriptors = await getLabeledFaceDescriptions()
-        const faceMatcher = new faceApi.FaceMatcher(labeledFaceDescriptors)
+  const onPlay = async (e: SyntheticEvent<HTMLVideoElement>) => {
+    const videoFrame = e.target as HTMLVideoElement
+    const frameContainer = frameContainerRef.current as HTMLDivElement
 
-        const canvas = faceApi.createCanvasFromMedia(frameRef.current)
-        document.body.append(canvas)
+    const labeledFaceDescriptors = await getLabeledFaceDescriptions()
+    const faceMatcher = new faceApi.FaceMatcher(labeledFaceDescriptors)
 
-        const displaySize = {
-          width: frameRef.current.width,
-          height: frameRef.current.height
-        }
-        faceApi.matchDimensions(canvas, displaySize)
+    const canvas = faceApi.createCanvasFromMedia(videoFrame as HTMLVideoElement)
+    canvas.style.position = 'absolute'
+    canvas.style.top = '0'
+    canvas.style.left = '0'
+    frameContainer.append(canvas)
 
-        setInterval(async () => {
-          if (frameRef.current) {
-            const detections = await faceApi
-              .detectAllFaces(frameRef.current)
-              .withFaceLandmarks()
-              .withFaceDescriptors()
+    const displaySize = { width: videoFrame.clientWidth, height: videoFrame.clientHeight }
+    faceApi.matchDimensions(canvas, displaySize as faceApi.IDimensions)
 
-            const resizedDetections = faceApi.resizeResults(detections, displaySize)
+    setInterval(async () => {
+      const detections = await faceApi
 
-            canvas?.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height)
+        .detectAllFaces(videoFrame as HTMLVideoElement)
+        .withFaceLandmarks()
+        .withFaceDescriptors()
 
-            const results = resizedDetections.map((d) => {
-              return faceMatcher.findBestMatch(d.descriptor).toString()
-            })
-            results.forEach((result, i) => {
-              const box = resizedDetections[i].detection.box
-              const drawBox = new faceApi.draw.DrawBox(box, {
-                label: result
-              })
+      const resizedDetections = faceApi.resizeResults(
+        detections,
+        displaySize as faceApi.IDimensions
+      )
 
-              present.add(result)
+      canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height)
 
-              console.log(present)
+      const results = resizedDetections.map((d) => {
+        return faceMatcher.findBestMatch(d.descriptor)
+      })
+      results.forEach((result, i) => {
+        const box = resizedDetections[i].detection.box
+        const drawBox = new faceApi.draw.DrawBox(box, { label: result.toString() })
 
-              drawBox.draw(canvas)
-            })
-          }
-        }, 100)
-      }
-    })
-  })
+        present.add(result.toString())
+        present.add(result.label)
+        console.log(present)
+
+        drawBox.draw(canvas)
+      })
+    }, 100)
+  }
 
   return (
-    <main className="w-full h-[calc(100vh - container)]">
+    <main
+      ref={frameContainerRef}
+      className="relative w-full h-[calc(100vh - container)] overflow-hidden"
+    >
       <Resizable className="border-2 border-red-500">
         <video
           ref={frameRef}
@@ -108,6 +110,7 @@ const Frame = () => {
           width={'100%'}
           height={'100%'}
           autoPlay
+          onPlay={onPlay}
           className="h-full w-full border-green-500"
         ></video>
       </Resizable>
