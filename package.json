@@ -19,6 +19,7 @@
     "build:win": "npm run build && electron-builder --win --config",
     "build:mac": "electron-vite build && electron-builder --mac --config",
     "build:linux": "electron-vite build && electron-builder --linux --config",
+    "migrate": "cd prisma && npx prisma migrate dev --name init",
     "commit": "cz"
   },
   "config": {
@@ -29,9 +30,11 @@
   "dependencies": {
     "@electron-toolkit/preload": "^2.0.0",
     "@electron-toolkit/utils": "^2.0.1",
+    "@prisma/client": "^5.5.2",
     "canvas": "^2.11.2",
     "electron-updater": "^6.1.4",
     "face-api.js": "^0.22.2",
+    "prisma": "^5.5.2",
     "react-icons": "^4.11.0",
     "react-router-dom": "^6.18.0"
   },

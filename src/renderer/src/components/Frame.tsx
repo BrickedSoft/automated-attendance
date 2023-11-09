@@ -1,8 +1,8 @@
 'use client'
 
+import { SyntheticEvent, useEffect, useRef } from 'react'
 import * as faceApi from 'face-api.js'
 import { Resizable } from 're-resizable'
-import { SyntheticEvent, useEffect, useRef } from 'react'
 
 const startWebCam = (ref: HTMLVideoElement) => {
   navigator.mediaDevices
@@ -60,9 +60,7 @@ const Frame = () => {
     const faceMatcher = new faceApi.FaceMatcher(labeledFaceDescriptors)
 
     const canvas = faceApi.createCanvasFromMedia(videoFrame as HTMLVideoElement)
-    canvas.style.position = 'absolute'
-    canvas.style.top = '0'
-    canvas.style.left = '0'
+    canvas.className = 'absolute top-0 left-0'
     frameContainer.append(canvas)
 
     const displaySize = { width: videoFrame.clientWidth, height: videoFrame.clientHeight }
