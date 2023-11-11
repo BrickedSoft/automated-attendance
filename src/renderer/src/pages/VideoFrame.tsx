@@ -1,5 +1,3 @@
-'use client'
-
 import { SyntheticEvent, useEffect, useRef } from 'react'
 import * as faceApi from 'face-api.js'
 import { Resizable } from 're-resizable'
