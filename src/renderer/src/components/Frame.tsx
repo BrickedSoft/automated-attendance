@@ -95,7 +95,6 @@ const Frame = () => {
       })
     }, 100)
   }
-
   return (
     <main
       ref={frameContainerRef}

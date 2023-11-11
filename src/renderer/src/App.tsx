@@ -1,12 +1,11 @@
-import File from './components/File'
-import Frame from './components/Frame'
 import Header from './components/Header'
+import Nav from './components/Nav'
 
 const App = (): JSX.Element => {
   return (
     <div className="w-full">
       <Header />
-      <Frame />
+      <Nav />
     </div>
   )
 }
