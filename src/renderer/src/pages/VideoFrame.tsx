@@ -45,6 +45,7 @@ const initWebCam = async (ref: HTMLVideoElement) => {
 
 const VideoFrame = () => {
   const frameContainerRef = useRef<HTMLDivElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
   const frameRef = useRef<HTMLVideoElement>(null)
   const present = new Set<string>([])
 
@@ -54,14 +55,9 @@ const VideoFrame = () => {
 
   const onPlay = async (e: SyntheticEvent<HTMLVideoElement>) => {
     const videoFrame = e.target as HTMLVideoElement
-    const frameContainer = frameContainerRef.current as HTMLDivElement
-
+    const canvas = canvasRef.current as HTMLCanvasElement
     const labeledFaceDescriptors = await getLabeledFaceDescriptions()
     const faceMatcher = new faceApi.FaceMatcher(labeledFaceDescriptors)
-
-    const canvas = faceApi.createCanvasFromMedia(videoFrame as HTMLVideoElement)
-    canvas.className = 'absolute top-0 left-0'
-    frameContainer.append(canvas)
 
     const displaySize = { width: videoFrame.clientWidth, height: videoFrame.clientHeight }
     faceApi.matchDimensions(canvas, displaySize as faceApi.IDimensions)
@@ -77,7 +73,6 @@ const VideoFrame = () => {
         detections,
         displaySize as faceApi.IDimensions
       )
-
       canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height)
 
       const results = resizedDetections.map((d) => {
@@ -95,7 +90,6 @@ const VideoFrame = () => {
       })
     }, 100)
   }
-
   return (
     <main
       ref={frameContainerRef}
@@ -111,6 +105,8 @@ const VideoFrame = () => {
           onPlay={onPlay}
           className="h-full w-full border-green-500"
         ></video>
+        <canvas ref={canvasRef} className='absolute top-0 left-0' />
+
       </Resizable>
     </main>
   )

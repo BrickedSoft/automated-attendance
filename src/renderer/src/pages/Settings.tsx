@@ -1,4 +1,4 @@
-import ImageSelect from '@renderer/components/ImageSelect'
+import ImageSelect from '@renderer/components/UserForm'
 
 const Settings = () => {
   return (
