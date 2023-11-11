@@ -1,13 +1,14 @@
 import { TbMaximize, TbMinimize, TbX, TbMinus } from 'react-icons/tb'
+import { routes } from './routes'
 
 export const navItems = [
   {
     title: 'Home',
-    href: '/'
+    href: routes.home
   },
   {
     title: 'Settings',
-    href: '/settings'
+    href: routes.settings
   }
 ]
 

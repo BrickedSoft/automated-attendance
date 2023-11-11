@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 
-import { controlItems } from '@renderer/assets/data/header'
+import { controlItems, navItems } from '@renderer/assets/data/header'
 import Logo from '../assets/img/logo.png'
 
 type NavItemProps = {
@@ -40,12 +40,12 @@ const Header = () => {
 
       {/* ----------------------------------- Mid ---------------------------------- */}
 
-      <div className="draggable w-full h-full"></div>
-      {/* <ul className="list-none flex justify-center items-center gap-6">
-          {navItems.map(({ title, href }, index) => (
-            <NavItem title={title} href={href} key={index} />
-          ))}
-        </ul> */}
+      {/* <div className="draggable w-full h-full"></div> */}
+      <ul className="list-none flex justify-center items-center gap-6">
+        {navItems.map(({ title, href }, index) => (
+          <NavItem title={title} href={href} key={index} />
+        ))}
+      </ul>
 
       <div className="draggable w-full h-full"></div>
 

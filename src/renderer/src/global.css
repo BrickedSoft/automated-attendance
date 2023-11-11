@@ -18,6 +18,12 @@ body {
   -webkit-user-select: none;
 }
 
+*:focus {
+  outline: none;
+  box-shadow: none;
+  /* box-shadow: 0 0 0 2px #74c0fc; */
+}
+
 /* ------------------------------- Scroll Bar ------------------------------- */
 
 ::-webkit-scrollbar {

@@ -15,6 +15,4 @@ ipcMain.on('TOGGLE_WINDOW', () => {
   else mainWindow.unmaximize()
 })
 
-ipcMain.on('IS_MAXIMIZED', (event) => {
-  event.returnValue = mainWindow.isMaximized()
-})
+ipcMain.handle('IS_MAXIMIZED', () => mainWindow.isMaximized())

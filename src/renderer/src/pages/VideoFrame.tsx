@@ -43,7 +43,7 @@ const initWebCam = async (ref: HTMLVideoElement) => {
   startWebCam(ref)
 }
 
-const Frame = () => {
+const VideoFrame = () => {
   const frameContainerRef = useRef<HTMLDivElement>(null)
   const frameRef = useRef<HTMLVideoElement>(null)
   const present = new Set<string>([])
@@ -116,4 +116,4 @@ const Frame = () => {
   )
 }
 
-export default Frame
+export default VideoFrame

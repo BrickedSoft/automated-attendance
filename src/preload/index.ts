@@ -1,6 +1,8 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
+import { User } from '../renderer/src/types/User'
+
 const api = {
   /* ----------------------------- Window Controls ---------------------------- */
 
@@ -10,7 +12,12 @@ const api = {
 
   /* ------------------------------ Window Events ----------------------------- */
 
-  isMaximized: (e) => ipcRenderer.sendSync('IS_MAXIMIZED', e)
+  isMaximized: (): Promise<boolean> => ipcRenderer.invoke('IS_MAXIMIZED'),
+
+  /* ----------------------------------- DB ----------------------------------- */
+
+  storeUser: (): Promise<User> => ipcRenderer.invoke('STORE_USER'),
+  loadUsers: (): Promise<User[]> => ipcRenderer.invoke('LOAD_USERS')
 }
 
 if (process.contextIsolated) {

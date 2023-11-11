@@ -1,9 +1,8 @@
 import { electronApp, optimizer } from '@electron-toolkit/utils'
 import { BrowserWindow, app } from 'electron'
-import { mkdirSync, copyFileSync, writeFile } from 'fs'
-import { join } from 'path'
 
 import './lib/controls'
+import './lib/script'
 
 import createMainWindow from './mainWindow'
 
@@ -17,21 +16,6 @@ app.whenReady().then(() => {
   })
 
   mainWindow = createMainWindow()
-
-  console.log('lol')
-
-  const folderToCreate = 'new'
-  const fileToCopy = 'test.txt'
-  const newFileName = 'newFile.txt'
-  const dest = join(__dirname, '../../out/renderer/labels/test')
-  const dest2 = join(dest, 'sample.txt')
-
-  // copyFileSync(fileToCopy, dest)
-  mkdirSync(dest.toString())
-  writeFile(dest2.toString(), 'This is a Sample File', function (err) {
-    if (err) throw err
-    console.log('Saved!')
-  })
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createMainWindow()
