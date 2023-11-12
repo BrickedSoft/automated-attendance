@@ -10,20 +10,27 @@ type NavItemProps = {
 
 type ControlItemProps = {
   icon: ReactNode
+  color?: string
   onClick: () => void
 }
 
 const NavItem: FC<NavItemProps> = ({ title, href }) => {
   return (
-    <a className="text-light-black-33 uppercase font-medium text-sm" href={href}>
+    <a
+      className="text-light-black-33 hover:text-light-blue-ff uppercase font-medium text-sm transition"
+      href={href}
+    >
       {title}
     </a>
   )
 }
 
-const ControlItem: FC<ControlItemProps> = ({ icon, onClick }) => {
+const ControlItem: FC<ControlItemProps> = ({ icon, color, onClick }) => {
   return (
-    <li className="text-light-black-33 uppercase font-medium text-sm" onClick={onClick}>
+    <li
+      className={`text-light-black-33 hover:text-${color} uppercase font-medium text-sm transition`}
+      onClick={onClick}
+    >
       {icon}
     </li>
   )
@@ -38,9 +45,6 @@ const Header = () => {
 
       <div className="draggable w-full h-full"></div>
 
-      {/* ----------------------------------- Mid ---------------------------------- */}
-
-      {/* <div className="draggable w-full h-full"></div> */}
       <ul className="list-none flex justify-center items-center gap-6">
         {navItems.map(({ title, href }, index) => (
           <NavItem title={title} href={href} key={index} />
@@ -50,8 +54,8 @@ const Header = () => {
       <div className="draggable w-full h-full"></div>
 
       <ul className="list-none flex justify-end items-center gap-6">
-        {controlItems.map(({ icon, onClick }, index) => (
-          <ControlItem icon={icon} onClick={onClick} key={index} />
+        {controlItems.map(({ icon, color, onClick }, index) => (
+          <ControlItem icon={icon} onClick={onClick} color={color} key={index} />
         ))}
       </ul>
     </div>
