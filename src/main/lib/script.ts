@@ -1,7 +1,8 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, User } from '@prisma/client'
 import { ipcMain } from 'electron'
-import { copyFIle, makeDir } from './utils'
+import { USER_PATH, copyFile, makeDir } from './utils'
 import { UserStore } from '../../renderer/src/types/User'
+import { promises as fs } from 'fs'
 
 const prisma = new PrismaClient()
 
@@ -18,9 +19,9 @@ ipcMain.handle('STORE_USER', async (_, { name, images }: UserStore) => {
       await prisma.$disconnect()
     })
 
-  makeDir(user?.id as string)
-  images.map((image, index) => {
-    copyFIle(user?.id as string, image, index.toString() +`.${image.split('.').pop()}`)
+  await makeDir(user?.id as string)
+  images.map(async (image, index) => {
+    await copyFile(user?.id as string, image, index.toString() + `.${image.split('.').pop()}`)
   })
 
   return user
@@ -37,6 +38,8 @@ ipcMain.handle(
         await prisma.$disconnect()
       })
 )
+
+ipcMain.handle('LOAD_IMAGES', async (_, user: User) => loadImages(user))
 
 /* ---------------------------------- STORE --------------------------------- */
 
@@ -56,3 +59,8 @@ const loadUser = async () =>
       id: true
     }
   })
+
+const loadImages = async (user: User) => {
+  const images = await fs.readdir(USER_PATH + `labels/${user.id}`)
+  
+}
