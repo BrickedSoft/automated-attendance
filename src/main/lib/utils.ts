@@ -9,7 +9,7 @@ export const makeDir = async (folder: string) => {
   const destination = join(basePath, folder)
   await fs
     .mkdir(destination.toString())
-    .then(() => console.log(`created ${destination.toString()}`))
+    .then(() => console.log(`mkDir: ${destination.toString()}`))
     .catch((err) => console.log(err))
 }
 
@@ -19,6 +19,6 @@ export const copyFile = async (folder: string, src: string, fileName: string) =>
 
   await fs
     .copyFile(src, destination)
-    .then(() => console.log(`${src} copied to ${destination}`))
+    .then(() => console.log(`copyFile: from ${src} to ${destination}`))
     .catch((err) => console.log(err))
 }

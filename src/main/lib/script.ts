@@ -60,7 +60,34 @@ const loadUser = async () =>
     }
   })
 
-const loadImages = async (user: User) => {
-  const images = await fs.readdir(USER_PATH + `labels/${user.id}`)
-  
+// loads all images of a user as buffer array
+const loadImages = async (user: User): Promise<(void | { buffer: Buffer; filetype: string })[]> => {
+  const path = USER_PATH + `/labels/${user.id}`
+  const files = await fs
+    .readdir(path)
+    .then((data) => {
+      console.log(`readDir: ${path}`)
+      return data
+    })
+    .catch((err) => console.log(err))
+
+  console.log(files)
+
+  const promiseImages = files?.map(async (file) => {
+    const image = await fs
+      .readFile(`${path}/${file}`)
+      .then((data) => {
+        console.log(`readFile: ${`${path}/${file}`}`)
+        return { buffer: data, filetype: `${file.split('.').pop()}` }
+      })
+      .catch((err) => console.log(err))
+
+    return image
+  })
+
+  const images = await Promise.all(promiseImages || [])
+
+  console.log(images)
+
+  return images
 }
