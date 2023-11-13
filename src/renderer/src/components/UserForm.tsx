@@ -3,7 +3,7 @@ import { useDropzone } from 'react-dropzone'
 
 import { button } from '@renderer/assets/data/userForm'
 import { Upload } from './Icons'
-import { UserContextType, UserStore } from '@renderer/types/User'
+import { UserContextType, UserStore } from '@renderer/types/user'
 import { UserContext } from '@renderer/context/UserContext'
 
 const ImageSelect = () => {

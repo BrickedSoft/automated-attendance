@@ -1,4 +1,4 @@
-import { Image, ImageContextType } from '@renderer/types/Image'
+import { Image, ImageContextType } from '@renderer/types/image'
 import { FC, ReactNode, createContext, useState } from 'react'
 
 export const ImageContext = createContext<ImageContextType | null>(null)

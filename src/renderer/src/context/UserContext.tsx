@@ -1,4 +1,4 @@
-import { User, UserContextType } from '@renderer/types/User'
+import { User, UserContextType } from '@renderer/types/user'
 import { FC, ReactNode, createContext, useState } from 'react'
 
 export const UserContext = createContext<UserContextType | null>(null)
