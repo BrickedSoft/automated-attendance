@@ -18,7 +18,7 @@ const api = {
 
   storeUser: (userStore): Promise<User> => ipcRenderer.invoke('STORE_USER', userStore),
   loadUsers: (): Promise<User[]> => ipcRenderer.invoke('LOAD_USERS'),
-  loadImages: (user: User): Promise<(void | { buffer: Buffer; filetype: string })[]> => ipcRenderer.invoke('LOAD_IMAGES', user)
+  loadImages: (user: User): Promise<(undefined | { buffer: Buffer; filetype: string }[])> => ipcRenderer.invoke('LOAD_IMAGES', user)
 }
 
 if (process.contextIsolated) {

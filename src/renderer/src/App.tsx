@@ -5,7 +5,7 @@ import Header from './components/Header'
 import Settings from './pages/Settings'
 import VideoFrame from './pages/VideoFrame'
 import UserProvider from './context/UserContext'
-
+import ImageProvider from './context/ImageContex'
 const App = (): JSX.Element => {
   return (
     <div className="w-full">
@@ -24,7 +24,9 @@ const App = (): JSX.Element => {
             path={nav.settings}
             element={
               <UserProvider>
-                <Settings />
+                <ImageProvider>
+                  <Settings />
+                </ImageProvider>
               </UserProvider>
             }
           />

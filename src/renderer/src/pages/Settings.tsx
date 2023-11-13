@@ -3,7 +3,7 @@ import ImageSelect from '@renderer/components/UserForm'
 
 const Settings = () => {
   return (
-    <div className="w-full px-5 py-9">
+    <div className="w-full px-5 py-9 ">
       <ImageSelect />
       {/* Testing codes */}
       <ImageView />
