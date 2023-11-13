@@ -3,9 +3,11 @@ import { useDropzone } from 'react-dropzone'
 
 import { button } from '@renderer/assets/data/userForm'
 import { Upload } from './Icons'
+import { UserStore } from '@renderer/types/User'
 
 const ImageSelect = () => {
   const [files, setFiles] = useState<(File & { preview: string })[]>([])
+  const [email, setEmail] = useState<string> ("")
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       'image/jpg': [],
@@ -30,6 +32,13 @@ const ImageSelect = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    const userStore: UserStore = {
+      name: email,
+      images: files.map((file) => file.path)
+    }
+
+    // getting newly created user on callback
+    button.add.onSubmit(userStore).then(user => console.log(user))
   }
 
   const preview = files.map((file) => {
@@ -71,6 +80,8 @@ const ImageSelect = () => {
           id="email"
           className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-4 py-2"
           placeholder="john.doe@company.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
       </div>
@@ -94,7 +105,7 @@ const ImageSelect = () => {
       </div>
 
       <button
-        type="button"
+        type="submit"
         className="text-white bg-light-blue-ff hover:bg-light-blue-ff/90 focus:ring-4 focus:outline-none focus:ring-light-blue-ff/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex gap-2 items-center dark:focus:ring-light-blue-ff/55 me-2 mb-2"
       >
         <div className="p-0.25 rounded-full bg-white">{button.add.icon}</div>

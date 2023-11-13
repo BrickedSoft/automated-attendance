@@ -9,7 +9,7 @@ type UserType = {
   name: string
 }
 
-ipcMain.handle('STORE_USERS', async (_, { name, images }: UserStore) => {
+ipcMain.handle('STORE_USER', async (_, { name, images }: UserStore) => {
   const user = await storeUser({ name })
     .catch((e) => {
       console.error(e)
@@ -20,7 +20,7 @@ ipcMain.handle('STORE_USERS', async (_, { name, images }: UserStore) => {
 
   makeDir(user?.id as string)
   images.map((image, index) => {
-    copyFIle(user?.id as string, image, index.toString())
+    copyFIle(user?.id as string, image, index.toString() +`.${image.split('.').pop()}`)
   })
 
   return user

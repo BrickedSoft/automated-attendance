@@ -16,7 +16,7 @@ const api = {
 
   /* ----------------------------------- DB ----------------------------------- */
 
-  storeUser: (): Promise<User> => ipcRenderer.invoke('STORE_USER'),
+  storeUser: (userStore): Promise<User> => ipcRenderer.invoke('STORE_USER', userStore),
   loadUsers: (): Promise<User[]> => ipcRenderer.invoke('LOAD_USERS')
 }
 
