@@ -3,25 +3,27 @@
 
 import { ImageContext } from '@renderer/context/ImageContex'
 import { UserContext } from '@renderer/context/UserContext'
-import { Image, ImageContextType } from '@renderer/types/Image'
+import { ImageContextType } from '@renderer/types/Image'
 import { User, UserContextType } from '@renderer/types/User'
 import { useContext, useEffect, useRef, useState } from 'react'
 
 const ImageView = () => {
   const imageRef = useRef<HTMLImageElement>(null)
-  const { users, addUsers } = useContext(UserContext) as UserContextType
-  const { images, addImages } = useContext(ImageContext) as ImageContextType
+  const { users } = useContext(UserContext) as UserContextType
+  const { images } = useContext(ImageContext) as ImageContextType
   const [selected, setSelected] = useState<User>()
 
-  useEffect(() => {
-    const loadUsers = async () => {
-      const users = await window.api.loadUsers()
-      addUsers(users)
-      console.log(users)
-    }
-
-    loadUsers()
-  }, [])
+  // const blobToImage = (blob) => {
+  //   return new Promise(resolve => {
+  //     const url = URL.createObjectURL(blob)
+  //     let img = new Image()
+  //     img.onload = () => {
+  //       URL.revokeObjectURL(url)
+  //       resolve(img)
+  //     }
+  //     img.src = url
+  //   })
+  // }
 
   useEffect(() => {
     if (users.length) setSelected(users[0])
@@ -39,43 +41,13 @@ const ImageView = () => {
     if (selected != undefined) setImage(selected)
   }, [selected])
 
-  useEffect(() => {
-    const loadImages = async (user: User): Promise<Image[]> => {
-      const buffers = await window.api.loadImages(user)
-      const newImages = buffers?.map((buffer, index) => {
-        const content = new Uint8Array(buffer.buffer)
-        // const src = URL.createObjectURL(
-        //   new Blob([content.buffer], { type: `image/${buffer.filetype}` })
-        // )
-
-        const blob = new Blob([content.buffer], { type: `image/${buffer.filetype}` })
-
-        const image: Image = { id: user.id + index, blob: blob, userId: user.id }
-        return image
-      })
-      return newImages || []
-    }
-
-    const loadAllUserImages = async () => {
-      users.forEach(async (user) => {
-        const newImages = await loadImages(user)
-        addImages(newImages)
-      })
-    }
-    if (users.length) {
-      loadAllUserImages()
-    }
-  }, [users])
-
-  useEffect(() => {
-    console.log('imagesi', images)
-  }, [images])
   return (
     <>
       <div className="flex border-2 border-indigo-200">
         <div className="overflow-y-auto h-72 w-48 ">
           {users.map((user) => (
             <div
+              key={user.id}
               className={`border-solid border-z border-b-2 hover:bg-blue-50 ${
                 selected?.id == user.id ? 'bg-red-150' : ''
               }`}
