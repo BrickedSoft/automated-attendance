@@ -1,12 +1,23 @@
 import electron from 'electron'
-import { promises as fs } from 'fs'
+import { existsSync, promises as fs } from 'fs'
 import { join } from 'path'
 
-export const USER_PATH = electron.app.getPath('userData')
+const userDataFolder = 'labels'
 
-export const makeDir = async (folder: string) => {
-  const basePath = join(USER_PATH, 'labels')
-  const destination = join(basePath, folder)
+export const USER_PATH = electron.app.getPath('userData')
+export const USER_LABELS_PATH = join(USER_PATH, userDataFolder)
+
+export const isLabelsFolderExists = () => existsSync(USER_LABELS_PATH)
+
+export const makeLabelsDir = async () => {
+  await fs
+    .mkdir(USER_LABELS_PATH.toString())
+    .then(() => console.log(`mkDir: ${USER_LABELS_PATH.toString()}`))
+    .catch((err) => console.log(err))
+}
+
+export const makeUserDir = async (folder: string) => {
+  const destination = join(USER_LABELS_PATH, folder)
   await fs
     .mkdir(destination.toString())
     .then(() => console.log(`mkDir: ${destination.toString()}`))
@@ -14,8 +25,7 @@ export const makeDir = async (folder: string) => {
 }
 
 export const copyFile = async (folder: string, src: string, fileName: string) => {
-  const basePath = join(USER_PATH, 'labels')
-  const destination = join(basePath, folder, fileName)
+  const destination = join(USER_LABELS_PATH, folder, fileName)
 
   await fs
     .copyFile(src, destination)

@@ -4,12 +4,15 @@ import { BrowserWindow, app } from 'electron'
 import './lib/controls'
 import './lib/script'
 
+import { isLabelsFolderExists, makeLabelsDir } from './lib/utils'
 import createMainWindow from './mainWindow'
 
 export let mainWindow: BrowserWindow
 
 app.whenReady().then(() => {
   electronApp.setAppUserModelId('com.electron')
+
+  if (!isLabelsFolderExists()) makeLabelsDir()
 
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)

@@ -22,6 +22,7 @@ const createMainWindow = (): BrowserWindow => {
   mainWindow.on('ready-to-show', () => {
     mainWindow.setMenuBarVisibility(false)
     mainWindow.show()
+    mainWindow.webContents.openDevTools()
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {

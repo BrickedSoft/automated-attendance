@@ -1,6 +1,6 @@
 import UserProvider from './context/UserContext'
-import ImageProvider from './context/ImageContex'
-import AppWithContext from './AppWithContex'
+import ImageProvider from './context/ImageContext'
+import AppWithContext from './AppWithContext'
 
 const App = (): JSX.Element => {
   return (

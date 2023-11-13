@@ -5,11 +5,11 @@
 @tailwind utilities;
 
 html {
-  scroll-behavior: smooth;
+  @apply scroll-smooth overflow-x-hidden;
 }
 
 body {
-  @apply font-primary text-light-black-55 overflow-hidden;
+  @apply font-primary text-light-black-55;
 }
 
 .draggable {
@@ -19,8 +19,7 @@ body {
 }
 
 *:focus {
-  outline: none;
-  box-shadow: none;
+  @apply outline-none shadow-none;
   /* box-shadow: 0 0 0 2px #74c0fc; */
 }
 
@@ -31,7 +30,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  border-radius: 9px;
+  @apply rounded-[9px] mt-header;
 }
 
 ::-webkit-scrollbar-thumb {

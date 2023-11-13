@@ -19,6 +19,9 @@ export default {
       },
       height: {
         header: '2rem'
+      },
+      margin: {
+        header: '2rem'
       }
     }
   },

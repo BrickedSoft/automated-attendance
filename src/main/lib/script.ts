@@ -1,17 +1,18 @@
 import { PrismaClient, User } from '@prisma/client'
 import { ipcMain } from 'electron'
-import { USER_PATH, copyFile, makeDir } from './utils'
-import { UserStore } from '../../renderer/src/types/User'
+import { USER_PATH, copyFile, makeUserDir } from './utils'
+import { UserStore } from '../../renderer/src/types/user'
 import { promises as fs } from 'fs'
 
 const prisma = new PrismaClient()
 
 type UserType = {
   name: string
+  studentId: number
 }
 
-ipcMain.handle('STORE_USER', async (_, { name, images }: UserStore) => {
-  const user = await storeUser({ name })
+ipcMain.handle('STORE_USER', async (_, { name, studentId, images }: UserStore) => {
+  const user = await storeUser({ name, studentId })
     .catch((e) => {
       console.error(e)
     })
@@ -19,7 +20,7 @@ ipcMain.handle('STORE_USER', async (_, { name, images }: UserStore) => {
       await prisma.$disconnect()
     })
 
-  await makeDir(user?.id as string)
+  await makeUserDir(user?.id as string)
   images.map(async (image, index) => {
     await copyFile(user?.id as string, image, index.toString() + `.${image.split('.').pop()}`)
   })
@@ -43,10 +44,11 @@ ipcMain.handle('LOAD_IMAGES', async (_, user: User) => loadImages(user))
 
 /* ---------------------------------- STORE --------------------------------- */
 
-const storeUser = async ({ name }: UserType) =>
+const storeUser = async ({ name, studentId }: UserType) =>
   await prisma.user.create({
     data: {
-      name: name
+      name,
+      studentId
     }
   })
 
@@ -55,8 +57,9 @@ const storeUser = async ({ name }: UserType) =>
 const loadUser = async () =>
   await prisma.user.findMany({
     select: {
+      id: true,
       name: true,
-      id: true
+      studentId: true
     }
   })
 

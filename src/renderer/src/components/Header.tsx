@@ -40,25 +40,29 @@ const ControlItem: FC<ControlItemProps> = ({ icon, color, onClick }) => {
 
 const Header = () => {
   return (
-    <div className="w-full h-header py-0.5 grid grid-cols-[auto_1fr_auto_1fr_auto] items-center justify-center px-5">
-      <img src={Logo} className="h-6 w-auto" />
+    <>
+      <div className="fixed z-50 bg-white w-screen h-header px-3 py-0.5 grid grid-cols-[auto_1fr_auto_1fr_auto] items-center justify-center">
+        <img src={Logo} className="h-6 w-auto" />
 
-      <div className="draggable w-full h-full"></div>
+        <div className="draggable w-full h-full"></div>
 
-      <ul className="list-none flex justify-center items-center gap-6">
-        {navItems.map(({ title, href }, index) => (
-          <NavItem title={title} href={href} key={index} />
-        ))}
-      </ul>
+        <ul className="list-none flex justify-center items-center gap-6">
+          {navItems.map(({ title, href }, index) => (
+            <NavItem title={title} href={href} key={index} />
+          ))}
+        </ul>
 
-      <div className="draggable w-full h-full"></div>
+        <div className="draggable w-full h-full"></div>
 
-      <ul className="list-none flex justify-end items-center gap-6">
-        {controlItems.map(({ icon, color, onClick }, index) => (
-          <ControlItem icon={icon} onClick={onClick} color={color} key={index} />
-        ))}
-      </ul>
-    </div>
+        <ul className="list-none flex justify-end items-center gap-6">
+          {controlItems.map(({ icon, color, onClick }, index) => (
+            <ControlItem icon={icon} onClick={onClick} color={color} key={index} />
+          ))}
+        </ul>
+      </div>
+
+      <div className="w-screen h-header "></div>
+    </>
   )
 }
 

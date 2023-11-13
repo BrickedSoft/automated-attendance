@@ -9,7 +9,11 @@ export type ImageStore = {
   images: string[]
 }
 
+export type ImageCollection = {
+  [key: string]: Image[]
+}
+
 export type ImageContextType = {
-  images: Image[]
+  images: ImageCollection
   addImages: (images: Image[]) => void
 }
