@@ -13,8 +13,11 @@ const UserProvider: FC<IUserProviderProps> = ({ children }) => {
   const [users, setUsers] = useState<UserCollection>({})
 
   const addUsers = (users: User[]) => setUsers((state) => ({ ...state, ..._.keyBy(users, 'id') }))
+  const removeUser = (user: User) => setUsers((state) => _.omit(state, user.id))
 
-  return <UserContext.Provider value={{ users, addUsers }}>{children}</UserContext.Provider>
+  return (
+    <UserContext.Provider value={{ users, addUsers, removeUser }}>{children}</UserContext.Provider>
+  )
 }
 
 export default UserProvider

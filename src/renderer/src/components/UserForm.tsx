@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 
-import { button } from '@renderer/assets/data/userForm'
+import { button } from '@renderer/assets/data/form'
 import { Upload } from './Icons'
 import { UserContextType, UserStore } from '@renderer/types/user'
 import { UserContext } from '@renderer/context/UserContext'
@@ -43,7 +43,13 @@ const ImageSelect = () => {
     }
 
     /* ----------------- getting newly created user on callback ----------------- */
-    button.add.onSubmit(userStore).then((user) => addUsers([user]))
+
+    button.add.onClick(userStore).then((user) => addUsers([user]))
+
+    /* ---------------------------- Resetting Fields ---------------------------- */
+    setName('')
+    setStudentId(undefined)
+    setFiles([])
   }
 
   const preview = files.map((file) => {
@@ -103,7 +109,7 @@ const ImageSelect = () => {
             name={fields.id.name}
             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-4 py-2"
             placeholder={fields.id.placeholder}
-            value={studentId}
+            value={studentId ?? ''}
             onChange={(e) => setStudentId(Number(e.target.value))}
             required={fields.id.required}
           />
@@ -134,7 +140,7 @@ const ImageSelect = () => {
 
       <button
         type="submit"
-        className="text-white bg-light-blue-ff hover:bg-light-blue-ff/90 focus:ring-4 focus:outline-none focus:ring-light-blue-ff/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex gap-2 items-center dark:focus:ring-light-blue-ff/55 me-2 mb-2"
+        className="text-white bg-light-blue-ff hover:bg-light-blue-b3 focus:ring-4 focus:outline-none focus:ring-light-blue-ff/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex gap-2 items-center dark:focus:ring-light-blue-ff/55 transition duration-300"
       >
         <div className="p-0.25 rounded-full bg-white">{button.add.icon}</div>
         {button.add.title}

@@ -1,6 +1,6 @@
 import { PrismaClient, User } from '@prisma/client'
 import { ipcMain } from 'electron'
-import { USER_PATH, copyFile, makeUserDir } from './utils'
+import { USER_PATH, copyFile, makeUserDir, removeUserDir } from './utils'
 import { UserStore } from '../../renderer/src/types/user'
 import { promises as fs } from 'fs'
 
@@ -28,6 +28,20 @@ ipcMain.handle('STORE_USER', async (_, { name, studentId, images }: UserStore) =
   return user
 })
 
+ipcMain.handle('DELETE_USER', async (_, user: User) => {
+  await deleteUser(user)
+    .catch((e) => {
+      console.error(e)
+    })
+    .finally(async () => {
+      await prisma.$disconnect()
+    })
+
+  await removeUserDir(user?.id as string)
+
+  return user
+})
+
 ipcMain.handle(
   'LOAD_USERS',
   async () =>
@@ -49,6 +63,15 @@ const storeUser = async ({ name, studentId }: UserType) =>
     data: {
       name,
       studentId
+    }
+  })
+
+/* --------------------------------- Delete --------------------------------- */
+
+const deleteUser = async (user: User) =>
+  await prisma.user.delete({
+    where: {
+      id: user.id
     }
   })
 

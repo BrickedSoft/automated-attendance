@@ -1,7 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
-import { User } from '../renderer/src/types/User'
+import { User, UserStore } from '../renderer/src/types/user'
 
 const api = {
   /* ----------------------------- Window Controls ---------------------------- */
@@ -16,9 +16,11 @@ const api = {
 
   /* ----------------------------------- DB ----------------------------------- */
 
-  storeUser: (userStore): Promise<User> => ipcRenderer.invoke('STORE_USER', userStore),
+  storeUser: (userStore: UserStore): Promise<User> => ipcRenderer.invoke('STORE_USER', userStore),
+  deleteUser: (user: User): Promise<User> => ipcRenderer.invoke('DELETE_USER', user),
   loadUsers: (): Promise<User[]> => ipcRenderer.invoke('LOAD_USERS'),
-  loadImages: (user: User): Promise<(undefined | { buffer: Buffer; filetype: string }[])> => ipcRenderer.invoke('LOAD_IMAGES', user)
+  loadImages: (user: User): Promise<undefined | { buffer: Buffer; filetype: string }[]> =>
+    ipcRenderer.invoke('LOAD_IMAGES', user)
 }
 
 if (process.contextIsolated) {

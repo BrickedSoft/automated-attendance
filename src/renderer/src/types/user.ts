@@ -17,4 +17,5 @@ export type UserCollection = {
 export type UserContextType = {
   users: UserCollection
   addUsers: (user: User[]) => void
+  removeUser: (user: User) => void
 }

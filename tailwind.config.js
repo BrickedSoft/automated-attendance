@@ -8,6 +8,7 @@ export default {
           bg: '#fff',
           'bg-f8': '#F8F8F8',
           'blue-ff': '#4790FF',
+          'blue-b3': '#4082e6',
           'black-55': '#555',
           'black-33': '#333',
           'gray-f9': '#F6F7F9'

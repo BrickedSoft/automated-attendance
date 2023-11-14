@@ -24,6 +24,14 @@ export const makeUserDir = async (folder: string) => {
     .catch((err) => console.log(err))
 }
 
+export const removeUserDir = async (folder: string) => {
+  const destination = join(USER_LABELS_PATH, folder)
+  await fs
+    .rm(destination.toString(), { recursive: true })
+    .then(() => console.log(`rmDir: ${destination.toString()}`))
+    .catch((err) => console.log(err))
+}
+
 export const copyFile = async (folder: string, src: string, fileName: string) => {
   const destination = join(USER_LABELS_PATH, folder, fileName)
 
