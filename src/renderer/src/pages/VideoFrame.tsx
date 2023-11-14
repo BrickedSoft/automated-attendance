@@ -1,6 +1,7 @@
-import { MatcherContext, MatcherContextType } from '@renderer/context/MatcherContext'
-import * as faceApi from 'face-api.js'
 import { SyntheticEvent, useContext, useEffect, useRef, useState } from 'react'
+import * as faceApi from 'face-api.js'
+
+import { MatcherContext, MatcherContextType } from '@renderer/context/MatcherContext'
 
 const VideoFrame = () => {
   const [localStream, setLocalStream] = useState<MediaStream | undefined>()
@@ -10,8 +11,8 @@ const VideoFrame = () => {
   const matchingInterval = useRef<NodeJS.Timeout>()
   const present = new Set<string>([])
 
-  const startWebCam = (ref: HTMLVideoElement) => {
-    navigator.mediaDevices
+  const startWebCam = async (ref: HTMLVideoElement) => {
+    await navigator.mediaDevices
       .getUserMedia({
         video: true,
         audio: false
@@ -25,12 +26,8 @@ const VideoFrame = () => {
       })
   }
 
-  const initWebCam = async (ref: HTMLVideoElement) => {
-    startWebCam(ref)
-  }
-
-  const stopWebCam = (stream) => {
-    stream.getVideoTracks()[0].stop()
+  const stopWebCam = async (stream) => {
+    await stream.getVideoTracks()[0].stop()
   }
 
   const onPlay = async (e: SyntheticEvent<HTMLVideoElement>) => {
@@ -41,20 +38,15 @@ const VideoFrame = () => {
   }
 
   useEffect(() => {
+    if (frameRef.current) startWebCam(frameRef.current)
     const cleanUp = () => {
       if (localStream) stopWebCam(localStream) //TODO: Doesn't work
       clearInterval(matchingInterval.current)
     }
     return () => cleanUp()
-  }, [])
-
-  useEffect(() => {
-    if (frameRef.current) initWebCam(frameRef.current)
   }, [frameRef])
 
   useEffect(() => {
-    console.log(descriptors)
-
     if (descriptors && frameRef.current && canvasRef.current) {
       const videoFrame = frameRef.current
       const displaySize = { width: videoFrame.clientWidth, height: videoFrame.clientHeight }
@@ -82,9 +74,9 @@ const VideoFrame = () => {
           const box = resizedDetections[i].detection.box
           const drawBox = new faceApi.draw.DrawBox(box, { label: result.toString() })
 
-          present.add(result.toString())
+          // present.add(result.toString())
           present.add(result.label)
-          console.log(present)
+          // console.log(present)
 
           drawBox.draw(canvas)
         })
@@ -95,17 +87,16 @@ const VideoFrame = () => {
   return (
     <main className="relative w-full h-[calc(100vh - container)] overflow-hidden">
       <canvas ref={canvasRef} className="absolute top-0 left-0" />
-     
-        <video
-          ref={frameRef}
-          id="video"
-          width={'100%'}
-          height={'100%'}
-          autoPlay
-          onPlay={onPlay}
-          className="h-full w-full border-green-500"
-        ></video>
-      
+
+      <video
+        ref={frameRef}
+        id="video"
+        width={'100%'}
+        height={'100%'}
+        autoPlay
+        onPlay={onPlay}
+        className="h-full w-full border-green-500"
+      ></video>
     </main>
   )
 }
