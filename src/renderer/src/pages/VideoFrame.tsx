@@ -2,14 +2,19 @@ import { SyntheticEvent, useContext, useEffect, useRef, useState } from 'react'
 import * as faceApi from 'face-api.js'
 
 import { MatcherContext, MatcherContextType } from '@renderer/context/MatcherContext'
+import { UserContext } from '@renderer/context/UserContext'
+import { UserContextType } from '@renderer/types/user'
+import theme from '../../../../tailwind.config'
 
 const VideoFrame = () => {
   const [localStream, setLocalStream] = useState<MediaStream | undefined>()
   const { descriptors } = useContext(MatcherContext) as MatcherContextType
+  const { users } = useContext(UserContext) as UserContextType
   const frameRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const matchingInterval = useRef<NodeJS.Timeout>()
   const present = new Set<string>([])
+  const [frameSize, setFrameSize] = useState({ width: 0, height: 0 })
 
   const startWebCam = async (ref: HTMLVideoElement) => {
     await navigator.mediaDevices
@@ -47,6 +52,18 @@ const VideoFrame = () => {
   }, [frameRef])
 
   useEffect(() => {
+    if (!frameRef.current) return
+    const resizeObserver = new ResizeObserver(() => {
+      setFrameSize({
+        width: frameRef.current?.clientWidth ?? 0,
+        height: frameRef.current?.clientHeight ?? 0
+      })
+    })
+    resizeObserver.observe(frameRef.current)
+    return () => resizeObserver.disconnect()
+  }, [])
+
+  useEffect(() => {
     if (descriptors && frameRef.current && canvasRef.current) {
       const videoFrame = frameRef.current
       const displaySize = { width: videoFrame.clientWidth, height: videoFrame.clientHeight }
@@ -72,22 +89,41 @@ const VideoFrame = () => {
         })
         results.forEach((result, i) => {
           const box = resizedDetections[i].detection.box
-          const drawBox = new faceApi.draw.DrawBox(box, { label: result.toString() })
+          const user = users[result.label.toString()]
+          const drawBox = new faceApi.draw.DrawBox(box, { label: user?.name })
 
           // present.add(result.toString())
-          present.add(result.label)
+          present.add(user?.name)
           // console.log(present)
 
           drawBox.draw(canvas)
         })
       }, 100)
     }
-  }, [descriptors, frameRef, canvasRef])
+  }, [descriptors, frameRef, canvasRef, users])
 
   return (
-    <main className="relative h-screen flex items-center justify-center bg-gray">
-      <video ref={frameRef} id="video" autoPlay onPlay={onPlay} className="h-full p-10"></video>
-      <canvas ref={canvasRef} className="absolute top-0 left-0" />
+    <main
+      className={`relative flex items-center justify-center bg-gray`}
+      style={{
+        height: `calc(100vh - ${theme.theme.extend.height.header})`
+      }}
+    >
+      <video
+        ref={frameRef}
+        id="video"
+        autoPlay
+        onPlay={onPlay}
+        className="w-full max-h-full py-6 px-8"
+      ></video>
+      <canvas
+        ref={canvasRef}
+        className="absolute w-full h-full top-2/4 -translate-y-2/4 left-2/4 -translate-x-2/4"
+        style={{
+          width: `${frameSize.width}px`,
+          height: `${frameSize.height}px`
+        }}
+      />
     </main>
   )
 }

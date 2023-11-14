@@ -15,8 +15,8 @@ const createMainWindow = (): BrowserWindow => {
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false,
-      devTools: false
+      sandbox: false
+      // devTools: false
     }
   })
   mainWindow.maximize()

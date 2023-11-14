@@ -97,8 +97,6 @@ const loadImages = async (user: User): Promise<(void | { buffer: Buffer; filetyp
     })
     .catch((err) => console.log(err))
 
-  console.log(files)
-
   const promiseImages = files?.map(async (file) => {
     const image = await fs
       .readFile(`${path}/${file}`)
@@ -112,8 +110,6 @@ const loadImages = async (user: User): Promise<(void | { buffer: Buffer; filetyp
   })
 
   const images = await Promise.all(promiseImages || [])
-
-  console.log(images)
 
   return images
 }

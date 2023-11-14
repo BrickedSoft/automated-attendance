@@ -16,12 +16,14 @@ import { MatcherContext, MatcherContextType } from './context/MatcherContext'
 const AppWithContext = (): JSX.Element => {
   const { users, addUsers } = useContext(UserContext) as UserContextType
   const { images, addImages } = useContext(ImageContext) as ImageContextType
-  const {setDescriptors} = useContext(MatcherContext) as MatcherContextType
+  const { setDescriptors } = useContext(MatcherContext) as MatcherContextType
+
+  /* -------------------------- Creating descriptors -------------------------- */
 
   const getLabeledFaceDescriptions = () => {
     return Promise.all(
       Object.values(users).map(async (user) => {
-        const descriptions: (Float32Array)[] = []
+        const descriptions: Float32Array[] = []
         if (images[user.id])
           images[user.id].forEach(async (thisImage) => {
             const img = await faceApi.fetchImage(URL.createObjectURL(thisImage.blob))
@@ -29,10 +31,10 @@ const AppWithContext = (): JSX.Element => {
               .detectSingleFace(img)
               .withFaceLandmarks()
               .withFaceDescriptor()
-            if(detections) descriptions.push(detections.descriptor)
+            if (detections) descriptions.push(detections.descriptor)
           })
 
-        return new faceApi.LabeledFaceDescriptors(user.name, descriptions as Float32Array[])
+        return new faceApi.LabeledFaceDescriptors(user.id, descriptions as Float32Array[])
       })
     )
   }
@@ -76,7 +78,7 @@ const AppWithContext = (): JSX.Element => {
       await faceApi.nets.faceRecognitionNet.loadFromUri('./models')
       await faceApi.nets.faceLandmark68Net.loadFromUri('./models')
       const data = await getLabeledFaceDescriptions()
-      if(data.length) setDescriptors(data)
+      if (data.length) setDescriptors(data)
     }
     if (images) generate()
   }, [images, users])
