@@ -33,6 +33,7 @@
     "@prisma/client": "^5.5.2",
     "electron-updater": "^6.1.4",
     "face-api.js": "^0.22.2",
+    "framer-motion": "^10.16.5",
     "global": "^4.4.0",
     "node-gyp": "3.8.0",
     "prisma": "^5.5.2",
@@ -66,7 +67,6 @@
     "typescript": "^5.2.2",
     "vite": "^4.5.0"
   },
-
   "build": {
     "appId": "com.BrickedSoft.attendance",
     "productName": "AA 1.2.0",

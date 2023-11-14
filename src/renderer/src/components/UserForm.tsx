@@ -81,7 +81,10 @@ const ImageSelect = () => {
   })
 
   return (
-    <form className="flex flex-col gap-8 justify-center items-center" onSubmit={onSubmit}>
+    <form
+      className="flex flex-col gap-12 justify-center items-center px-16 py-12 rounded-lg border border-gray-300"
+      onSubmit={onSubmit}
+    >
       <div className="w-full flex gap-16">
         <div className="w-full self-start grid grid-cols-[auto_1fr] gap-6 items-center">
           <label htmlFor={fields.name.name} className="block text-sm font-medium text-gray-900">

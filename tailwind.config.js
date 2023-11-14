@@ -11,6 +11,7 @@ export default {
           'blue-b3': '#4082e6',
           'black-55': '#555',
           'black-33': '#333',
+          'black-18': '#18181B',
           'gray-f9': '#F6F7F9'
         }
       },
