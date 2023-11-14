@@ -1,7 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-
-import { User } from '../renderer/src/types/User'
+import { User } from '@prisma/client';
 
 const api = {
   /* ----------------------------- Window Controls ---------------------------- */

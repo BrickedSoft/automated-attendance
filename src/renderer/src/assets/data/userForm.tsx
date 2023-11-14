@@ -1,4 +1,4 @@
-import { UserStore } from '@renderer/types/User'
+import { UserStore } from '@renderer/types/user'
 import { MdAdd } from 'react-icons/md'
 
 export const button = {

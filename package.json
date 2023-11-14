@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "An Electron application for automated attendance system using face recognition",
   "main": "./out/main/index.js",
-  "author": "flourish",
+  "author": "BrickedSoft",
   "homepage": "https://github.com/BrickedSoft/attendance",
   "license": "MIT",
   "scripts": {
@@ -65,5 +65,38 @@
     "tailwindcss": "^3.3.5",
     "typescript": "^5.2.2",
     "vite": "^4.5.0"
+  },
+
+  "build": {
+    "appId": "com.BrickedSoft.attendance",
+    "productName": "AA 1.2.0",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "BrickedSoft",
+        "repo": "attendance"
+      }
+    ],
+    "win": {
+      "publish": [
+        "github"
+      ],
+      "target": [
+        {
+          "target": "NSIS",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "extraResources": [
+      "prisma/**/*",
+      "node_modules/.prisma/**/*",
+      "node_modules/@prisma/client/**/*"
+    ],
+    "extraMetadata": {
+      "main": "out/main/index.js"
+    }
   }
 }
