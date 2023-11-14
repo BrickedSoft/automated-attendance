@@ -72,9 +72,9 @@ const AppWithContext = (): JSX.Element => {
   /* --------------------------- making descriptors --------------------------- */
   useEffect(() => {
     const generate = async () => {
-      await faceApi.nets.ssdMobilenetv1.loadFromUri('/models')
-      await faceApi.nets.faceRecognitionNet.loadFromUri('/models')
-      await faceApi.nets.faceLandmark68Net.loadFromUri('/models')
+      await faceApi.nets.ssdMobilenetv1.loadFromUri('./models')
+      await faceApi.nets.faceRecognitionNet.loadFromUri('./models')
+      await faceApi.nets.faceLandmark68Net.loadFromUri('./models')
       const data = await getLabeledFaceDescriptions()
       if(data.length) setDescriptors(data)
     }

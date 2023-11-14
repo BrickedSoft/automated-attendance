@@ -1,4 +1,4 @@
-import { TbMaximize, TbMinimize, TbX, TbMinus } from 'react-icons/tb'
+import { TbMaximize, TbX, TbMinus } from 'react-icons/tb'
 import { routes } from './routes'
 
 export const navItems = [
