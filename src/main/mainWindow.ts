@@ -6,8 +6,9 @@ import icon from '../../resources/icon.png?asset'
 
 const createMainWindow = (): BrowserWindow => {
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    // width: 900,
+    // height: 670,
+    fullscreen: true,
     show: false,
     frame: false,
     // autoHideMenuBar: true,
