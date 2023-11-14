@@ -6,9 +6,8 @@ import icon from '../../resources/icon.png?asset'
 
 const createMainWindow = (): BrowserWindow => {
   const mainWindow = new BrowserWindow({
-    // width: 900,
-    // height: 670,
-    fullscreen: true,
+    width: 900,
+    height: 670,
     show: false,
     frame: false,
     // autoHideMenuBar: true,
@@ -16,10 +15,11 @@ const createMainWindow = (): BrowserWindow => {
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
+      sandbox: false,
+      devTools: false
     }
   })
-
+  mainWindow.maximize()
   mainWindow.on('ready-to-show', () => {
     mainWindow.setMenuBarVisibility(false)
     mainWindow.show()

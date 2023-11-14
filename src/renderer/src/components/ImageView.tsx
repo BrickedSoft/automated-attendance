@@ -1,17 +1,14 @@
 // Loading user from db and also loading their images from fs
 // component to testing
 
-import { ImageContext } from '@renderer/context/ImageContext'
 import { UserContext } from '@renderer/context/UserContext'
-import { ImageContextType } from '@renderer/types/image'
 import { User, UserContextType } from '@renderer/types/user'
 import { useContext, useEffect, useRef, useState } from 'react'
 
 const ImageView = () => {
   const imageRef = useRef<HTMLImageElement>(null)
   const { users } = useContext(UserContext) as UserContextType
-  const { images } = useContext(ImageContext) as ImageContextType
-  const [selected, setSelected] = useState<User>()
+  const [, setSelected] = useState<User>()
 
   // const blobToImage = (blob) => {
   //   return new Promise(resolve => {

@@ -85,18 +85,9 @@ const VideoFrame = () => {
   }, [descriptors, frameRef, canvasRef])
 
   return (
-    <main className="relative w-full h-[calc(100vh - container)] overflow-hidden">
+    <main className="relative h-screen flex items-center justify-center bg-gray">
+      <video ref={frameRef} id="video" autoPlay onPlay={onPlay} className="h-full p-10"></video>
       <canvas ref={canvasRef} className="absolute top-0 left-0" />
-
-      <video
-        ref={frameRef}
-        id="video"
-        width={'100%'}
-        height={'100%'}
-        autoPlay
-        onPlay={onPlay}
-        className="h-full w-full border-green-500"
-      ></video>
     </main>
   )
 }
