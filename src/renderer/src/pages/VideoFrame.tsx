@@ -106,7 +106,8 @@ const VideoFrame = () => {
     <main
       className={`relative flex items-center justify-center bg-gray`}
       style={{
-        height: `calc(100vh - ${theme.theme.extend.height.header})`
+        height: `calc(100vh - ${theme.theme.extend.height.header})`,
+        marginLeft: theme.theme.extend.width.sidebar
       }}
     >
       <video

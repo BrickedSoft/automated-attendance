@@ -22,6 +22,9 @@ export default {
       height: {
         header: '2rem'
       },
+      width: {
+        sidebar: '16rem'
+      },
       margin: {
         header: '2rem'
       }

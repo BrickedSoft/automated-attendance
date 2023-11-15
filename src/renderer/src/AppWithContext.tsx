@@ -8,11 +8,13 @@ import Header from './components/Header'
 import { ImageContext } from './context/ImageContext'
 import { UserContext } from './context/UserContext'
 import Settings from './pages/Settings'
-import VideoFrame from './pages/VideoFrame'
 import { Image, ImageContextType } from './types/image'
 import { User, UserContextType } from './types/user'
 import { MatcherContext, MatcherContextType } from './context/MatcherContext'
-
+import SideBar from './components/SideBar'
+import VideoFrame from './pages/VideoFrame'
+import Home from './pages/Home'
+import Attendance from './pages/Attendance'
 const AppWithContext = (): JSX.Element => {
   const { users, addUsers } = useContext(UserContext) as UserContextType
   const { images, addImages } = useContext(ImageContext) as ImageContextType
@@ -87,10 +89,14 @@ const AppWithContext = (): JSX.Element => {
     <div className="w-full">
       <Header />
       <HashRouter>
-        <Routes>
-          <Route index element={<VideoFrame />} />
-          <Route path={nav.settings} element={<Settings />} />
-        </Routes>
+        <div className="w-full flex-row">
+          <SideBar />
+          <Routes>
+            <Route index element={<VideoFrame />} />
+            <Route path={nav.attendance} element={<Attendance />} />
+            <Route path={nav.settings} element={<Settings />} />
+          </Routes>
+        </div>
       </HashRouter>
     </div>
   )

@@ -41,16 +41,16 @@ const ControlItem: FC<ControlItemProps> = ({ icon, color, onClick }) => {
 const Header = () => {
   return (
     <>
-      <div className="fixed z-50 bg-white w-screen h-header px-3 py-0.5 grid grid-cols-[auto_1fr_auto_1fr_auto] items-center justify-center">
+      <div className="fixed z-50 bg-white w-screen h-header px-3 py-0.5 grid grid-cols-[auto_1fr_auto_1fr_auto] items-center justify-center shadow-sm">
         <img src={Logo} className="h-6 w-auto" />
 
         <div className="draggable w-full h-full"></div>
 
-        <ul className="list-none flex justify-center items-center gap-6">
+        {/* <ul className="list-none flex justify-center items-center gap-6">
           {navItems.map(({ title, href }, index) => (
             <NavItem title={title} href={href} key={index} />
           ))}
-        </ul>
+        </ul> */}
 
         <div className="draggable w-full h-full"></div>
 

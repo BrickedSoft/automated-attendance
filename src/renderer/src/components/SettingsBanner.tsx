@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useScroll } from 'framer-motion'
 import { useRef, useState } from 'react'
-
+import theme from '../../../../tailwind.config'
 import { data } from '@renderer/assets/data/settings'
 
 const SettingsBanner = () => {
@@ -22,8 +22,10 @@ const SettingsBanner = () => {
         <motion.div
           ref={ref}
           key={1}
-          className={`fixed left-0 flex items-center justify-center px-16 py-4 ${
-            scrollPosition === 0 ? 'w-full h-52' : 'w-auto h-auto'
+          className={`fixed left-0 flex items-center justify-center px-16 py-4 ml-64 ${
+            scrollPosition === 0
+              ? `w-[calc(100%-16rem)] h-52`
+              : 'w-auto h-auto'
           } z-50`}
           layout
           transition={{
