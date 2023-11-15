@@ -5,15 +5,16 @@ import { MatcherContext, MatcherContextType } from '@renderer/context/MatcherCon
 import { UserContext } from '@renderer/context/UserContext'
 import { UserContextType } from '@renderer/types/user'
 import theme from '../../../../tailwind.config'
+import _ from 'lodash'
 
 const VideoFrame = () => {
   const [localStream, setLocalStream] = useState<MediaStream | undefined>()
   const { descriptors } = useContext(MatcherContext) as MatcherContextType
   const { users } = useContext(UserContext) as UserContextType
+  const { setPresentUsers } = useContext(UserContext) as UserContextType
   const frameRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const matchingInterval = useRef<NodeJS.Timeout>()
-  const present = new Set<string>([])
   const [frameSize, setFrameSize] = useState({ width: 0, height: 0 })
 
   const startWebCam = async (ref: HTMLVideoElement) => {
@@ -90,11 +91,18 @@ const VideoFrame = () => {
         results.forEach((result, i) => {
           const box = resizedDetections[i].detection.box
           const user = users[result.label.toString()]
-          const drawBox = new faceApi.draw.DrawBox(box, { label: user?.name })
-
-          // present.add(result.toString())
-          present.add(user?.name)
-          // console.log(present)
+          const drawBox = new faceApi.draw.DrawBox(box, {
+            label: result.distance < 0.5 ? user?.name : ''
+          })
+          if (user && result.distance < 0.5) {
+            setPresentUsers((state) => {
+              if (_.has(state, user.id)) return state
+              else {
+                console.log('adding once', user.name)
+                return { ...state, ..._.keyBy([user], 'id') }
+              }
+            })
+          }
 
           drawBox.draw(canvas)
         })

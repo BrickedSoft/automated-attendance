@@ -1,12 +1,8 @@
 import { FC, ReactNode } from 'react'
 
-import { controlItems, navItems } from '@renderer/assets/data/header'
+import { controlItems } from '@renderer/assets/data/header'
 import Logo from '../assets/img/logo.png'
 
-type NavItemProps = {
-  title: string
-  href: string
-}
 
 type ControlItemProps = {
   icon: ReactNode
@@ -14,16 +10,7 @@ type ControlItemProps = {
   onClick: () => void
 }
 
-const NavItem: FC<NavItemProps> = ({ title, href }) => {
-  return (
-    <a
-      className="text-light-black-33 hover:text-light-blue-ff uppercase font-medium text-sm transition"
-      href={href}
-    >
-      {title}
-    </a>
-  )
-}
+
 
 const ControlItem: FC<ControlItemProps> = ({ icon, color, onClick }) => {
   return (
@@ -45,12 +32,6 @@ const Header = () => {
         <img src={Logo} className="h-6 w-auto" />
 
         <div className="draggable w-full h-full"></div>
-
-        {/* <ul className="list-none flex justify-center items-center gap-6">
-          {navItems.map(({ title, href }, index) => (
-            <NavItem title={title} href={href} key={index} />
-          ))}
-        </ul> */}
 
         <div className="draggable w-full h-full"></div>
 

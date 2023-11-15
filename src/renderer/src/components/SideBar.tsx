@@ -5,23 +5,21 @@ import { sideBarItems } from '@renderer/assets/data/sidebar'
 
 const SideBar = () => {
   const { pathname } = useLocation()
-  console.log(pathname)
 
   type NavItemProps = {
     title: string
     href: string
     icon: ReactNode
-    key: number
   }
 
-  const NavItem: FC<NavItemProps> = ({ title, href, icon, key }) => {
+  const NavItem: FC<NavItemProps> = ({ title, href, icon }) => {
     return (
-      <li key={key}>
+      <li >
         <a
           href={href}
           className={`relative flex flex-row items-center h-11 focus:outline-non text-gray-600 hover:text-gray-800 border-l-4 border-transparent pr-6 ${
             href.substring(1) == pathname.substring(1)
-              ? 'border-indigo-500 bg-sky-50'
+              ? ' border-indigo-500 bg-sky-50'
               : 'hover:bg-gray-100'
           }`}
         >

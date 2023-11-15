@@ -1,3 +1,5 @@
+import { Dispatch } from "react"
+
 export type User = {
   id: string
   name: string
@@ -16,6 +18,9 @@ export type UserCollection = {
 
 export type UserContextType = {
   users: UserCollection
+  presentUsers: UserCollection
   addUsers: (user: User[]) => void
   removeUser: (user: User) => void
+  removePresentUser: (user: User) => void
+  setPresentUsers: Dispatch<React.SetStateAction<UserCollection>>
 }

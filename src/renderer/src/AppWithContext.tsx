@@ -13,7 +13,6 @@ import { User, UserContextType } from './types/user'
 import { MatcherContext, MatcherContextType } from './context/MatcherContext'
 import SideBar from './components/SideBar'
 import VideoFrame from './pages/VideoFrame'
-import Home from './pages/Home'
 import Attendance from './pages/Attendance'
 const AppWithContext = (): JSX.Element => {
   const { users, addUsers } = useContext(UserContext) as UserContextType

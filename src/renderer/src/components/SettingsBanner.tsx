@@ -1,6 +1,5 @@
 import { AnimatePresence, motion, useScroll } from 'framer-motion'
 import { useRef, useState } from 'react'
-import theme from '../../../../tailwind.config'
 import { data } from '@renderer/assets/data/settings'
 
 const SettingsBanner = () => {
