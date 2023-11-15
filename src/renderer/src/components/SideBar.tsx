@@ -1,7 +1,8 @@
-import theme from '../../../../tailwind.config'
-import { useLocation } from 'react-router-dom'
 import { FC, ReactNode } from 'react'
+import { useLocation } from 'react-router-dom'
+
 import { sideBarItems } from '@renderer/assets/data/sidebar'
+import theme from '../../../../tailwind.config'
 
 const SideBar = () => {
   const { pathname } = useLocation()
@@ -14,29 +15,29 @@ const SideBar = () => {
 
   const NavItem: FC<NavItemProps> = ({ title, href, icon }) => {
     return (
-      <li >
-        <a
-          href={href}
-          className={`relative flex flex-row items-center h-11 focus:outline-non text-gray-600 hover:text-gray-800 border-l-4 border-transparent pr-6 ${
-            href.substring(1) == pathname.substring(1)
-              ? ' border-indigo-500 bg-sky-50'
-              : 'hover:bg-gray-100'
-          }`}
-        >
-          <span className="inline-flex justify-center items-center ml-4">{icon}</span>
-          <span className="ml-2 text-sm tracking-wide truncate">{title}</span>
-        </a>
-      </li>
+      <a
+        href={href}
+        className={`flex gap-4 items-center px-6 py-4 rounded-lg outline-none text-gray-600 hover:text-gray-800 ${
+          href.substring(1) == pathname.substring(1)
+            ? ' border-indigo-500 bg-light-blue-ff/10'
+            : 'hover:bg-gray-100'
+        } transition-all duration-300`}
+      >
+        <span className="inline-flex justify-center items-center">{icon}</span>
+        <span className="text-sm tracking-wide truncate">{title}</span>
+      </a>
     )
   }
 
   return (
     <div
-      className="fixed flex flex-col top-0 left-0 w-64 bg-white h-full border-r"
-      style={{ marginTop: theme.theme.extend.height.header }}
+      className="fixed flex-col w-sidebar bg-white shadow-[36px_0_36px_rgba(28,126,214,0.04)] px-6 py-9 overflow-hidden z-50"
+      style={{
+        height: `calc(100vh - ${theme.theme.extend.height.header})`
+      }}
     >
-      <div className="overflow-y-auto overflow-x-hidden flex-grow">
-        <ul className="flex flex-col py-4 space-y-1">
+      <div className="h-full overflow-y-auto overflow-x-hidden flex-grow">
+        <ul className="h-full flex flex-col py-4 gap-3 list-none items-stretch">
           {sideBarItems.map(({ title, href, icon }, index) => (
             <NavItem title={title} href={href} key={index} icon={icon} />
           ))}

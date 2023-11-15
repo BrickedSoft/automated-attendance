@@ -14,6 +14,7 @@ import { MatcherContext, MatcherContextType } from './context/MatcherContext'
 import SideBar from './components/SideBar'
 import VideoFrame from './pages/VideoFrame'
 import Attendance from './pages/Attendance'
+
 const AppWithContext = (): JSX.Element => {
   const { users, addUsers } = useContext(UserContext) as UserContextType
   const { images, addImages } = useContext(ImageContext) as ImageContextType
@@ -88,7 +89,7 @@ const AppWithContext = (): JSX.Element => {
     <div className="w-full">
       <Header />
       <HashRouter>
-        <div className="w-full flex-row">
+        <div className="w-full h-full grid grid-cols-[auto_1fr] gap-4">
           <SideBar />
           <Routes>
             <Route index element={<VideoFrame />} />

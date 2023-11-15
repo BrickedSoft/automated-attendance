@@ -1,11 +1,11 @@
 import { SyntheticEvent, useContext, useEffect, useRef, useState } from 'react'
 import * as faceApi from 'face-api.js'
+import _ from 'lodash'
 
 import { MatcherContext, MatcherContextType } from '@renderer/context/MatcherContext'
 import { UserContext } from '@renderer/context/UserContext'
 import { UserContextType } from '@renderer/types/user'
 import theme from '../../../../tailwind.config'
-import _ from 'lodash'
 
 const VideoFrame = () => {
   const [localStream, setLocalStream] = useState<MediaStream | undefined>()
@@ -92,9 +92,9 @@ const VideoFrame = () => {
           const box = resizedDetections[i].detection.box
           const user = users[result.label.toString()]
           const drawBox = new faceApi.draw.DrawBox(box, {
-            label: result.distance < 0.5 ? user?.name : ''
+            label: result.distance < 0.4 ? user?.name : 'Unknown'
           })
-          if (user && result.distance < 0.5) {
+          if (user && result.distance < 0.4) {
             setPresentUsers((state) => {
               if (_.has(state, user.id)) return state
               else {

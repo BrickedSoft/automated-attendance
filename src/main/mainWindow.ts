@@ -8,6 +8,8 @@ const createMainWindow = (): BrowserWindow => {
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
+    minWidth: 1080,
+    minHeight: 600,
     show: false,
     frame: false,
     // autoHideMenuBar: true,
@@ -15,15 +17,15 @@ const createMainWindow = (): BrowserWindow => {
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
-      // devTools: false
+      sandbox: false,
+      devTools: is.dev ? true : false
     }
   })
   mainWindow.maximize()
   mainWindow.on('ready-to-show', () => {
     mainWindow.setMenuBarVisibility(false)
     mainWindow.show()
-    mainWindow.webContents.openDevTools()
+    if (is.dev) mainWindow.webContents.openDevTools()
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {

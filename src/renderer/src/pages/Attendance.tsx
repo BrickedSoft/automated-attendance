@@ -1,10 +1,13 @@
-import theme from '../../../../tailwind.config'
 import { FC, useContext } from 'react'
+
 import { UserContext } from '@renderer/context/UserContext'
 import { User, UserContextType } from '@renderer/types/user'
 import { ImageContext } from '@renderer/context/ImageContext'
 import { ImageContextType } from '@renderer/types/image'
 import { button } from '@renderer/assets/data/userList'
+import Banner from '@renderer/components/Banner'
+import { data } from '@renderer/assets/data/attendance'
+import theme from '../../../../tailwind.config'
 
 type ExtendedUser = User & { image: string | undefined }
 
@@ -41,9 +44,8 @@ const Attendance = () => {
         marginLeft: theme.theme.extend.width.sidebar
       }}
     >
+      <Banner name={data.name} />
       <div className="flex flex-col items-center divide-y-[1.5px] overflow-scroll">
-      <h1 className="mb-4 text-3xl font-extrabold text-gray-900 md:text-3xl lg:text-4xl my-6"><span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Present</span> Student List.</h1>
-
         {presentUsers &&
           images &&
           Object.values(presentUsers).map(({ id, name, studentId }) => {

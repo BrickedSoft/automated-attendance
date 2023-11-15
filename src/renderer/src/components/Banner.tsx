@@ -1,8 +1,11 @@
+import { FC, useRef, useState } from 'react'
 import { AnimatePresence, motion, useScroll } from 'framer-motion'
-import { useRef, useState } from 'react'
-import { data } from '@renderer/assets/data/settings'
 
-const SettingsBanner = () => {
+type BannerProps = {
+  name: string
+}
+
+const Banner: FC<BannerProps> = ({ name }) => {
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -22,9 +25,7 @@ const SettingsBanner = () => {
           ref={ref}
           key={1}
           className={`fixed left-0 flex items-center justify-center px-16 py-4 ml-64 ${
-            scrollPosition === 0
-              ? `w-[calc(100%-16rem)] h-52`
-              : 'w-auto h-auto'
+            scrollPosition === 0 ? `w-[calc(100%-16rem)] h-52` : 'w-auto h-auto'
           } z-50`}
           layout
           transition={{
@@ -35,7 +36,7 @@ const SettingsBanner = () => {
           }}
         >
           <motion.div
-            className={`w-full h-full flex items-center justify-center bg-[#fff4f2] rounded-tl-[36px] rounded-br-[36px]  ${
+            className={`w-full h-full flex flex-col items-center justify-center bg-[#fff4f2] rounded-tl-[36px] rounded-br-[36px]  ${
               scrollPosition === 0
                 ? ''
                 : '!rounded-tl-[4.8px] !rounded-br-[4.8px] bg-transparent transition-colors delay-300'
@@ -43,11 +44,14 @@ const SettingsBanner = () => {
             layout
           >
             <motion.p
-              className={`text-3xl font-bold text-light-black-18 tracking-tight drop-shadow-lg`}
+              className={`${
+                scrollPosition === 0 ? `font-bold  drop-shadow-lg` : 'font-semibold'
+              } text-3xl text-light-black-18 tracking-tight`}
               layout
             >
-              {data.name}
+              {name}
             </motion.p>
+            <hr className="border-1 border-red-500 z-50" />
           </motion.div>
         </motion.div>
 
@@ -59,4 +63,4 @@ const SettingsBanner = () => {
   )
 }
 
-export default SettingsBanner
+export default Banner

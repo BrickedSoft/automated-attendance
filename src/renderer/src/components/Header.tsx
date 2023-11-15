@@ -3,14 +3,11 @@ import { FC, ReactNode } from 'react'
 import { controlItems } from '@renderer/assets/data/header'
 import Logo from '../assets/img/logo.png'
 
-
 type ControlItemProps = {
   icon: ReactNode
   color?: string
   onClick: () => void
 }
-
-
 
 const ControlItem: FC<ControlItemProps> = ({ icon, color, onClick }) => {
   return (
@@ -28,7 +25,7 @@ const ControlItem: FC<ControlItemProps> = ({ icon, color, onClick }) => {
 const Header = () => {
   return (
     <>
-      <div className="fixed z-50 bg-white w-screen h-header px-3 py-0.5 grid grid-cols-[auto_1fr_auto_1fr_auto] items-center justify-center shadow-sm">
+      <div className="fixed z-50 bg-white w-screen h-header px-3 py-0.5 grid grid-cols-[auto_1fr_auto_1fr_auto] items-center justify-center">
         <img src={Logo} className="h-6 w-auto" />
 
         <div className="draggable w-full h-full"></div>
