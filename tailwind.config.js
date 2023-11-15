@@ -23,7 +23,8 @@ export default {
         header: '2rem'
       },
       width: {
-        sidebar: '16rem'
+        sidebar: '16rem',
+        'sidebar-sm': '5rem'
       },
       margin: {
         header: '2rem'
