@@ -89,7 +89,7 @@ const AppWithContext = (): JSX.Element => {
     <div className="w-full">
       <Header />
       <HashRouter>
-        <div className="w-full h-full grid grid-cols-[auto_1fr] gap-4">
+        <div className="w-full h-full flex flex-col gap-4">
           <SideBar />
           <Routes>
             <Route index element={<VideoFrame />} />
