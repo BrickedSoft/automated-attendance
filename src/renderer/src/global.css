@@ -5,11 +5,11 @@
 @tailwind utilities;
 
 html {
-  @apply scroll-smooth overflow-x-hidden;
+  @apply scroll-smooth;
 }
 
 body {
-  @apply font-primary text-light-black-55;
+  @apply font-primary text-light-black-55  overflow-hidden;
 }
 
 .draggable {
@@ -30,7 +30,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  @apply rounded-[9px] mt-header;
+  @apply rounded-[9px];
 }
 
 ::-webkit-scrollbar-thumb {

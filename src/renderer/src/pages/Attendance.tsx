@@ -1,17 +1,17 @@
-import { FC, useContext } from 'react'
+import { FC, SyntheticEvent, useContext, useState } from 'react'
 
-import { UserContext } from '@renderer/context/UserContext'
-import { User, UserContextType } from '@renderer/types/user'
-import { ImageContext } from '@renderer/context/ImageContext'
-import { ImageContextType } from '@renderer/types/image'
+import { data } from '@renderer/assets/data/attendance'
 import { button } from '@renderer/assets/data/userList'
 import Banner from '@renderer/components/Banner'
-import { data } from '@renderer/assets/data/attendance'
-import theme from '../../../../tailwind.config'
+import { ImageContext } from '@renderer/context/ImageContext'
+import { UserContext } from '@renderer/context/UserContext'
+import { ImageContextType } from '@renderer/types/image'
+import { User, UserContextType } from '@renderer/types/user'
 
 type ExtendedUser = User & { image: string | undefined }
 
 const Attendance = () => {
+  const [isScrollTop, setIsScrollTop] = useState(true)
   const { presentUsers, removePresentUser } = useContext(UserContext) as UserContextType
   const { images } = useContext(ImageContext) as ImageContextType
 
@@ -39,12 +39,13 @@ const Attendance = () => {
 
   return (
     <div
-      className="flex flex-col gap-12 px-16 pb-9 overflow-hidden"
-      style={{
-        marginLeft: theme.theme.extend.width.sidebar
+      className="h-full flex flex-col gap-12 px-16 pb-9 overflow-y-scroll"
+      onScroll={(e: SyntheticEvent) => {
+        const target = e.target as HTMLTextAreaElement
+        setIsScrollTop(target.scrollTop === 0)
       }}
     >
-      <Banner name={data.name} />
+      <Banner name={data.name} isScrollTop={isScrollTop} />
       <div className="flex flex-col items-center divide-y-[1.5px] overflow-scroll">
         {presentUsers &&
           images &&

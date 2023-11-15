@@ -1,10 +1,10 @@
 import { FC, ReactNode, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { IoChevronBackOutline } from 'react-icons/io5'
 import { useLocation } from 'react-router-dom'
 
 import { sideBarItems } from '@renderer/assets/data/sidebar'
 import theme from '../../../../tailwind.config'
-import { AnimatePresence, motion } from 'framer-motion'
 
 const SideBar = () => {
   const { pathname } = useLocation()
@@ -43,7 +43,7 @@ const SideBar = () => {
   return (
     <AnimatePresence initial={false}>
       <motion.div
-        className={`fixed flex-col ${
+        className={`flex-col ${
           isMinimized ? 'w-sidebar-sm justify-center px-2' : 'w-sidebar px-6'
         } bg-white shadow-[4px_36px_36px_rgba(28,126,214,0.1)] py-9 overflow-hidden z-50`}
         style={{

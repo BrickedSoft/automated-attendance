@@ -16,16 +16,19 @@ export const controlItems = [
   {
     icon: <TbMinus size={20} strokeWidth={2} />,
     onClick: () => window.api.minimizeWindow(),
-    color: 'light-blue-ff'
+    color: '#181818',
+    bg: '#f1f3f5'
   },
   {
     icon: <TbMaximize size={16} strokeWidth={2} />,
     onClick: () => window.api.toggleWindow(),
-    color: 'light-blue-ff'
+    color: '#181818',
+    bg: '#f1f3f5'
   },
   {
     icon: <TbX size={20} strokeWidth={2} />,
     onClick: () => window.api.closeWindow(),
-    color: 'red-500'
+    color: 'white',
+    bg: '#f03e3e'
   }
 ]

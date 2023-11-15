@@ -1,11 +1,10 @@
-import { SyntheticEvent, useContext, useEffect, useRef, useState } from 'react'
 import * as faceApi from 'face-api.js'
 import _ from 'lodash'
+import { SyntheticEvent, useContext, useEffect, useRef, useState } from 'react'
 
 import { MatcherContext, MatcherContextType } from '@renderer/context/MatcherContext'
 import { UserContext } from '@renderer/context/UserContext'
 import { UserContextType } from '@renderer/types/user'
-import theme from '../../../../tailwind.config'
 
 const VideoFrame = () => {
   const [localStream, setLocalStream] = useState<MediaStream | undefined>()
@@ -111,13 +110,7 @@ const VideoFrame = () => {
   }, [descriptors, frameRef, canvasRef, users])
 
   return (
-    <main
-      className={`relative flex items-center justify-center bg-gray`}
-      style={{
-        height: `calc(100vh - ${theme.theme.extend.height.header})`,
-        marginLeft: theme.theme.extend.width.sidebar
-      }}
-    >
+    <main className={`relative flex items-center justify-center bg-gray`}>
       <video
         ref={frameRef}
         id="video"

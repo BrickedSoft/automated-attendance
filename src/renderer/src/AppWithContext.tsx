@@ -14,6 +14,7 @@ import { MatcherContext, MatcherContextType } from './context/MatcherContext'
 import SideBar from './components/SideBar'
 import VideoFrame from './pages/VideoFrame'
 import Attendance from './pages/Attendance'
+import theme from '../../../tailwind.config'
 
 const AppWithContext = (): JSX.Element => {
   const { users, addUsers } = useContext(UserContext) as UserContextType
@@ -89,7 +90,12 @@ const AppWithContext = (): JSX.Element => {
     <div className="w-full">
       <Header />
       <HashRouter>
-        <div className="w-full h-full flex flex-col gap-4">
+        <div
+          className="w-full grid grid-cols-[auto_1fr] overflow-hidden"
+          style={{
+            height: `calc(100vh - ${theme.theme.extend.height.header})`
+          }}
+        >
           <SideBar />
           <Routes>
             <Route index element={<VideoFrame />} />
