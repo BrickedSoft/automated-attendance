@@ -5,9 +5,11 @@ import { SyntheticEvent, useContext, useEffect, useRef, useState } from 'react'
 import { MatcherContext, MatcherContextType } from '@renderer/context/MatcherContext'
 import { UserContext } from '@renderer/context/UserContext'
 import { UserContextType } from '@renderer/types/user'
+import { data } from '@renderer/assets/data/videoFrame'
 
 const VideoFrame = () => {
   const [localStream, setLocalStream] = useState<MediaStream | undefined>()
+  const [isCameraOn, setIsCameraOn] = useState<boolean>()
   const { descriptors } = useContext(MatcherContext) as MatcherContextType
   const { users } = useContext(UserContext) as UserContextType
   const { setPresentUsers } = useContext(UserContext) as UserContextType
@@ -25,9 +27,11 @@ const VideoFrame = () => {
       .then((stream) => {
         setLocalStream(stream)
         ref.srcObject = stream
+        setIsCameraOn(true)
       })
       .catch((error) => {
         console.error(error)
+        setIsCameraOn(false)
       })
   }
 
@@ -110,7 +114,7 @@ const VideoFrame = () => {
   }, [descriptors, frameRef, canvasRef, users])
 
   return (
-    <main className={`relative flex items-center justify-center bg-gray`}>
+    <main className={`relative flex flex-col items-center justify-center bg-gray`}>
       <video
         ref={frameRef}
         id="video"
@@ -126,6 +130,40 @@ const VideoFrame = () => {
           height: `${frameSize.height}px`
         }}
       />
+
+      {!isCameraOn && (
+        <div className="absolute flex flex-col items-center gap-6 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4">
+          <div className="flex items-center gap-4">
+            <div
+              className={`${
+                isCameraOn === false ? 'text-light-red-3e' : 'text-light-blue-ff'
+              } text-2xl`}
+            >
+              {isCameraOn === false ? data.camera.off.icon : data.camera.initializing.icon}
+            </div>
+
+            <p
+              className={`${
+                isCameraOn === false ? 'text-light-red-3e' : 'text-light-blue-ff'
+              } text-2xl font-medium`}
+            >
+              {isCameraOn === false ? data.camera.off.title : data.camera.initializing.title}
+            </p>
+          </div>
+
+          {isCameraOn === false && (
+            <button
+              className="text-white bg-light-red-3e hover:bg-light-red-31 focus:ring-4 focus:outline-none focus:ring-light-red-3e/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex gap-2 items-center dark:focus:ring-light-blue-ff/55 transition duration-300"
+              onClick={() => {
+                if (frameRef.current) startWebCam(frameRef.current)
+                setIsCameraOn(undefined)
+              }}
+            >
+              {data.button.error.title}
+            </button>
+          )}
+        </div>
+      )}
     </main>
   )
 }

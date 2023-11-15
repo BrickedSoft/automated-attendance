@@ -26,7 +26,7 @@ const SideBar = () => {
           href.substring(1) == pathname.substring(1)
             ? ' border-indigo-500 bg-light-blue-ff/10 !text-light-blue-ff'
             : 'hover:bg-gray-100'
-        } transition-all duration-300`}
+        } transition-all`}
       >
         <motion.span className="inline-flex justify-center items-center" layout="position">
           {icon}
@@ -59,7 +59,7 @@ const SideBar = () => {
       >
         <div className={`flex ${isMinimized ? 'justify-center' : 'justify-end'}`}>
           <motion.div
-            className="inline-flex justify-center items-center cursor-pointer text-2xl text-gray-400 hover:text-light-blue-ff hover:scale-110 transition duration-300"
+            className="group inline-flex justify-center items-center cursor-pointer text-2xl text-gray-400 hover:text-light-blue-ff transition"
             onClick={() => {
               setIsMinimized(!isMinimized)
             }}
@@ -67,7 +67,7 @@ const SideBar = () => {
             animate={{ rotate: isMinimized ? 0 : 180 }}
             transition={{ duration: 0.5, type: 'spring' }}
           >
-            <IoChevronBackOutline />
+            <IoChevronBackOutline className="group-hover:scale-125  transition" />
           </motion.div>
         </div>
         <div className="h-full overflow-y-auto overflow-x-hidden flex-grow">

@@ -12,7 +12,9 @@ export default {
           'black-55': '#555',
           'black-33': '#333',
           'black-18': '#18181B',
-          'gray-f9': '#F6F7F9'
+          'gray-f9': '#F6F7F9',
+          'red-3e': '#f03e3e',
+          'red-31': '#e03131'
         }
       },
       fontFamily: {
