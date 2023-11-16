@@ -11,13 +11,18 @@ interface IUserProviderProps {
 
 const UserProvider: FC<IUserProviderProps> = ({ children }) => {
   const [users, setUsers] = useState<UserCollection>({})
-  const [presentUsers, setPresentUsers] =useState<UserCollection>({})
+  const [presentUsers, setPresentUsers] = useState<UserCollection>({})
 
   const addUsers = (users: User[]) => setUsers((state) => ({ ...state, ..._.keyBy(users, 'id') }))
   const removeUser = (user: User) => setUsers((state) => _.omit(state, user.id))
   const removePresentUser = (present: User) => setPresentUsers((state) => _.omit(state, present.id))
+
   return (
-    <UserContext.Provider value={{ users, presentUsers, addUsers, setPresentUsers, removeUser, removePresentUser }}>{children}</UserContext.Provider>
+    <UserContext.Provider
+      value={{ users, presentUsers, addUsers, setPresentUsers, removeUser, removePresentUser }}
+    >
+      {children}
+    </UserContext.Provider>
   )
 }
 

@@ -12,14 +12,15 @@ import { Image, ImageContextType } from './types/image'
 import { User, UserContextType } from './types/user'
 import { MatcherContext, MatcherContextType } from './context/MatcherContext'
 import SideBar from './components/SideBar'
-import VideoFrame from './pages/VideoFrame'
+import Home from './pages/Home'
 import Attendance from './pages/Attendance'
 import theme from '../../../tailwind.config'
+import InitialLoad from './components/InitialLoad'
 
 const AppWithContext = (): JSX.Element => {
   const { users, addUsers } = useContext(UserContext) as UserContextType
   const { images, addImages } = useContext(ImageContext) as ImageContextType
-  const { setDescriptors } = useContext(MatcherContext) as MatcherContextType
+  const { descriptors, setDescriptors } = useContext(MatcherContext) as MatcherContextType
 
   /* -------------------------- Creating descriptors -------------------------- */
 
@@ -89,21 +90,25 @@ const AppWithContext = (): JSX.Element => {
   return (
     <div className="w-full">
       <Header />
-      <HashRouter>
-        <div
-          className="w-full grid grid-cols-[auto_1fr] overflow-hidden"
-          style={{
-            height: `calc(100vh - ${theme.theme.extend.height.header})`
-          }}
-        >
-          <SideBar />
-          <Routes>
-            <Route index element={<VideoFrame />} />
-            <Route path={nav.attendance} element={<Attendance />} />
-            <Route path={nav.settings} element={<Settings />} />
-          </Routes>
-        </div>
-      </HashRouter>
+      {descriptors === undefined ? (
+        <InitialLoad />
+      ) : (
+        <HashRouter>
+          <div
+            className="w-full grid grid-cols-[auto_1fr] overflow-hidden"
+            style={{
+              height: `calc(100vh - ${theme.theme.extend.height.header})`
+            }}
+          >
+            <SideBar />
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path={nav.attendance} element={<Attendance />} />
+              <Route path={nav.settings} element={<Settings />} />
+            </Routes>
+          </div>
+        </HashRouter>
+      )}
     </div>
   )
 }

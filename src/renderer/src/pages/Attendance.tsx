@@ -29,7 +29,7 @@ const Attendance = () => {
         </div>
         <div
           className="p-2 text-white text-xl bg-light-blue-ff rounded-full hover:bg-light-blue-b3 transition duration-300 cursor-pointer"
-          onClick={() => button.remove.onClick(user).then((user) => removePresentUser(user))}
+          onClick={() => removePresentUser(user)}
         >
           {button.remove.icon}
         </div>
