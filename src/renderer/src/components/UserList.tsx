@@ -19,7 +19,7 @@ const UserList = () => {
     return (
       <div className="w-full flex items-center justify-between gap-24">
         <div className="flex items-center gap-6 px-6 py-4 rounded-lg">
-          <img src={image} className="w-12 h-12 rounded-full" />
+          <img src={image} className="w-12 h-12 rounded-full object-cover" />
           <div>
             <p className="font-medium">{name}</p>
             <p className="text-sm font-medium">{studentId}</p>

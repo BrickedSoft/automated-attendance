@@ -1,26 +1,26 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import * as faceApi from 'face-api.js'
 import { HashRouter, Route, Routes } from 'react-router-dom'
-import _ from 'lodash'
 
+import theme from '../../../tailwind.config'
 import { nav } from './assets/data/routes'
 import Header from './components/Header'
+import InitialLoad from './components/InitialLoad'
+import SideBar from './components/SideBar'
 import { ImageContext } from './context/ImageContext'
+import { MatcherContext, MatcherContextType } from './context/MatcherContext'
 import { UserContext } from './context/UserContext'
+import Attendance from './pages/Attendance'
+import Home from './pages/Home'
 import Settings from './pages/Settings'
 import { Image, ImageContextType } from './types/image'
 import { User, UserContextType } from './types/user'
-import { MatcherContext, MatcherContextType } from './context/MatcherContext'
-import SideBar from './components/SideBar'
-import Home from './pages/Home'
-import Attendance from './pages/Attendance'
-import theme from '../../../tailwind.config'
-import InitialLoad from './components/InitialLoad'
 
 const AppWithContext = (): JSX.Element => {
   const { users, addUsers } = useContext(UserContext) as UserContextType
   const { images, addImages } = useContext(ImageContext) as ImageContextType
-  const { descriptors, setDescriptors } = useContext(MatcherContext) as MatcherContextType
+  const { setDescriptors } = useContext(MatcherContext) as MatcherContextType
+  const [isLoaded, setIsLoaded] = useState(false)
 
   /* -------------------------- Creating descriptors -------------------------- */
 
@@ -83,6 +83,7 @@ const AppWithContext = (): JSX.Element => {
       await faceApi.nets.faceLandmark68Net.loadFromUri('./models')
       const data = await getLabeledFaceDescriptions()
       if (data.length) setDescriptors(data)
+      setIsLoaded(true)
     }
     if (images) generate()
   }, [images, users])
@@ -90,7 +91,7 @@ const AppWithContext = (): JSX.Element => {
   return (
     <div className="w-full">
       <Header />
-      {descriptors === undefined ? (
+      {!isLoaded ? (
         <InitialLoad />
       ) : (
         <HashRouter>
